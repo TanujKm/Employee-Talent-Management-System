@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .dashboard-section {
+            margin-top: 20px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .dashboard-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .dashboard-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .dashboard-section li {
+            margin-bottom: 10px;
+        }
+
+        .profile-image {
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+        }
+
+        .profile-details {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to MS Employee Dashboard</h1>
+        <div class="profile-details">
+            <img id="profileImage" class="profile-image" src="" alt="Profile Image">
+            <h2 id="employeeName"></h2>
+            <p id="employeeEmail"></p>
+            <p id="employeePosition"></p>
+            <p id="employeerejisternumber"></p>
+        </div>
+        
+        
+        <div class="dashboard-section">
+            <h3>Attendance</h3>
+            <p>Attendance details go here...</p>
+            <ul>
+                <li>Day 1: Present</li>
+                <li>Day 2: Absent</li>
+                <li>Day 3: Present</li>
+               
+            </ul>
+        </div>
+        <div class="dashboard-section">
+            <h3>Salary</h3>
+            <p>Salary details go here...</p>
+            <ul>
+                <li>Month JAN: Recived</li>
+                <li>Month FAV: Recived</li>
+                <li>Month MAR: Not Recived</li>
+                
+            </ul>
+        </div>
+
+        
+        <div class="dashboard-section">
+            <h3>Performance</h3>
+            <p>Performance details go here...</p>
+            <ul>
+                <li>January: Excellent</li>
+                <li>February: Good</li>
+                <li>March: Average</li>
+                
+            </ul>
+        </div>
+
+        
+        <div class="dashboard-section">
+            <h3>Projects</h3>
+            <ul>
+                <li>Project 1: Website Redesign</li>
+                <li>Project 2: Mobile App Development</li>
+               
+            </ul>
+        </div>
+
+       
+        <div class="dashboard-section">
+            <h3>Meetings</h3>
+            <p>Meeting schedule details go here...</p>
+            <ul>
+                <li>Meeting with team: Monday 10 AM</li>
+                <li>Client meeting: Wednesday 2 PM</li>
+                
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Display logged in employee's details
+        const loggedInEmployee = JSON.parse(localStorage.getItem('loggedInEmployee'));
+        if (loggedInEmployee) {
+            document.getElementById('employeeName').textContent = loggedInEmployee.fullName;
+            document.getElementById('employeeEmail').textContent = loggedInEmployee.email;
+            document.getElementById('employeePosition').textContent = loggedInEmployee.position;
+            document.getElementById('employeerejisternumber').textContent = loggedInEmployee.rejisternumber;
+            document.getElementById('profileImage').src = loggedInEmployee.profileImage;
+        } else {
+            alert('No logged-in employee found!');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
