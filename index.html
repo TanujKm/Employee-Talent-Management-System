@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talent Management System</title>
+    <style>
+        /* CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            border: 0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        #employeeListSection {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Talent Management System</h1>
+
+        <!-- Employee Registration Form -->
+        <section id="registrationSection">
+            <h2>Employee Registration</h2>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="position">Position:</label>
+                    <input type="text" id="position" required>
+                </div>
+                <div class="form-group">
+                    <label for="addEmployee_create--dob">"Date of Birth":</label>
+                <input type="date" name="dob"required>
+                </div> 
+                <div class="form-group">
+                    <label for="rejisternumber">Rejister Number:</label>
+                    <input type="number" id="rejisternumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="profileImage">Profile Image:</label>
+                    <input type="file" id="profileImage" required>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </section>
+
+        <!-- Employee Login Form -->
+        <section id="loginSection">
+            <h2>Employee Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="text" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginrejisternumber">Rejisterd number:</label>
+                    <input type="number" id="loginrejisternumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </section>
+
+        <!-- Registered Employee List -->
+        <section id="employeeListSection">
+            <h2>Registered Employees</h2>
+            <ul id="employeeList"></ul>
+        </section>
+    </div>
+
+    <script>
+        // Simulated employee registration
+        const employees = JSON.parse(localStorage.getItem('employees')) || [];
+
+        function updateEmployeeList() {
+            const employeeList = document.getElementById('employeeList');
+            employeeList.innerHTML = '';
+            employees.forEach(employee => {
+                const li = document.createElement('li');
+                li.textContent = `${employee.fullName} - ${employee.email} - ${employee.position}`;
+                employeeList.appendChild(li);
+            });
+        }
+
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const position = document.getElementById('position').value;
+            const rejisternumber = document.getElementById('rejisternumber').value;
+            const password = document.getElementById('password').value;
+            const profileImage = document.getElementById('profileImage').files[0];
+
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const profileImageData = reader.result;
+
+                employees.push({ fullName, email, position, rejisternumber, password, profileImage: profileImageData });
+                localStorage.setItem('employees', JSON.stringify(employees));
+
+                alert('Employee registered successfully!');
+                updateEmployeeList();
+            };
+
+            if (profileImage) {
+                reader.readAsDataURL(profileImage);
+            }
+        });
+
+        // Simulated employee login
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const employee = employees.find(emp => emp.email === email && emp.password === password);
+            if (employee) {
+                localStorage.setItem('loggedInEmployee', JSON.stringify(employee));
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('Invalid email or password!');
+            }
+        });
+
+        updateEmployeeList();
+    </script>
+</body>
+</html>
